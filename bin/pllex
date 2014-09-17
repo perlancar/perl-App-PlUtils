@@ -75,6 +75,29 @@ Perinci::CmdLine::Any->new(
  % pllex Some/script.pl
  % pllex --module Some::Module
 
+Example output:
+
+ % cat 1.pl
+ require A::B;
+ require C;
+
+ % pllex 1.pl
+ +---------+--------------+------+------+-------------------+-------+------+
+ | data    | has_warnings | kind | line | name              | stype | type |
+ | require | 0            | 3    | 1    | RequireDecl       | 0     | 71   |
+ | A       | 0            | 25   | 1    | Namespace         | 0     | 127  |
+ | ::      | 0            | 1    | 1    | NamespaceResolver | 0     | 126  |
+ | B       | 0            | 25   | 1    | Namespace         | 0     | 127  |
+ | ;       | 0            | 21   | 1    | SemiColon         | 0     | 106  |
+ | require | 0            | 3    | 2    | RequireDecl       | 0     | 71   |
+ | C       | 0            | 16   | 2    | RequiredName      | 0     | 95   |
+ | ;       | 0            | 21   | 2    | SemiColon         | 0     | 106  |
+ +---------+--------------+------+------+-------------------+-------+------+
+
+For more options:
+
+ % pllex --help
+
 To active bash completion:
 
  % complete -C pllex pllex; # can be put in bash startup file e.g. .bashrc

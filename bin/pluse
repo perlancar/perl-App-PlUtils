@@ -108,6 +108,25 @@ Perinci::CmdLine::Any->new(
  % pluse Some/script.pl
  % pluse --module Some::Module
 
+Sample output:
+
+ % cat 1.pl
+ require A::B;
+ use C;
+
+ % pluse 1.pl
+ +------+
+ | A::B |
+ | C    |
+ +------+
+
+ % pluse 1.pl --detail
+ +------+---------+--------+
+ | line | method  | module |
+ | 1    | require | A::B   |
+ | 2    | use     | C      |
+ +------+---------+--------+
+
 To active bash completion:
 
  % complete -C pluse pluse; # can be put in bash startup file e.g. .bashrc

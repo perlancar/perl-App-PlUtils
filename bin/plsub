@@ -30,6 +30,9 @@ _
             schema  => 'str*',
             pos     => 0,
         },
+        detail => {
+            schema => 'bool',
+        },
     },
     result_naked=>1,
 };
@@ -58,17 +61,28 @@ sub plsub {
         <$fh>;
     };
     my $tokens = $lexer->tokenize($ct);
-    my @subs;
+    my @res;
     for my $i (0..@$tokens-1) {
         my $t = $tokens->[$i];
+        my $sub;
         if ($i < @$tokens-1 && $t->{name} eq 'FunctionDecl') {
             my $t2 = $tokens->[$i+1];
             if ($t2->{name} eq 'Function') {
-                push @subs, $t2->{data};
+                $sub = $t2->{data};
+            }
+        }
+        if ($sub) {
+            if ($args{detail}) {
+                push @res, {
+                    name => $sub,
+                    line => $t->{line},
+                };
+            } else {
+                push @res, $sub;
             }
         }
     }
-    \@subs;
+    \@res;
 }
 
 Perinci::CmdLine::Any->new(
@@ -82,6 +96,27 @@ Perinci::CmdLine::Any->new(
 
  % plsub Some/script.pl
  % plsub --module Some::Module
+
+Sample output:
+
+ % plsub --module Org::Element::Table
+ +--------------+
+ | BUILD        |
+ | rows         |
+ | row_count    |
+ | column_count |
+ | as_aoa       |
+ +--------------+
+
+ % plsub -m Org/Element/Table --detail
+ +------+--------------+
+ | line | name         |
+ | 13   | BUILD        |
+ | 55   | rows         |
+ | 65   | row_count    |
+ | 75   | column_count |
+ | 96   | as_aoa       |
+ +------+--------------+
 
 To active bash completion:
 
