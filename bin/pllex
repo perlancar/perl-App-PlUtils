@@ -1,0 +1,82 @@
+#!perl
+
+# DATE
+# VERSION
+
+use 5.010;
+use strict;
+use warnings;
+
+use App::PMUtils;
+use Perinci::CmdLine::Any -prefer_lite=>1;
+
+our %SPEC;
+$SPEC{pllex} = {
+    v => 1.1,
+    summary => 'Tokenize Perl script (or module) using Compiler::Lexer',
+    description => <<'_',
+
+
+
+_
+    args => {
+        module => {
+            schema => 'str*',
+            completion => $App::PMUtils::_complete_module,
+            cmdline_aliases => {m=>{}},
+        },
+        file => {
+            summary => 'Specify file instead of module',
+            schema  => 'str*',
+            pos     => 0,
+        },
+    },
+    result_naked=>1,
+};
+sub pllex {
+    require Compiler::Lexer;
+    require SHARYANTO::Module::Path;
+
+    my %args = @_;
+    my $path;
+    if (defined $args{module}) {
+        my $mod = $args{module};
+        $mod =~ s/\.pm$//; $mod =~ s!/!::!g; # convenience
+        $path = SHARYANTO::Module::Path::module_path(module=>$mod);
+        die "Can't find module '$mod'" unless $path;
+    } elsif (defined $args{file}) {
+        $path = $args{file};
+        (-f $path) or die "No such file '$path'\n";
+    } else {
+        die "Please specify file or module (-m)\n";
+    }
+
+    my $lexer = Compiler::Lexer->new($path);
+    my $ct = do {
+        undef $/;
+        open my $fh, "<", $path or die "Can't open '$path': $!\n";
+        <$fh>;
+    };
+    my $tokens = $lexer->tokenize($ct);
+    my @res;
+    for (@$tokens) { push @res, { %$_ } }
+    \@res;
+}
+
+Perinci::CmdLine::Any->new(
+    url => '/main/pllex',
+)->run;
+
+# ABSTRACT: Tokenize Perl script (or module) using Compiler::Lexer
+# PODNAME: pllex
+
+=head1 SYNOPSIS
+
+ % pllex Some/script.pl
+ % pllex --module Some::Module
+
+To active bash completion:
+
+ % complete -C pllex pllex; # can be put in bash startup file e.g. .bashrc
+ % pllex -m MIME/<tab>
+ % pllex -m "MIME::B<tab> ; # use quote (' or ") if you want to use :: as separator
