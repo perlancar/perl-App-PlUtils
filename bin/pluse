@@ -79,6 +79,8 @@ sub pluse {
                     $t2 = $tokens->[$j];
                 }
                 $mod = $s;
+            } else {
+                next;
             }
             if ($args{detail}) {
                 push @res, {
