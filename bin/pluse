@@ -127,12 +127,6 @@ Sample output:
  | 2    | use     | C      |
  +------+---------+--------+
 
-To active bash completion:
-
- % complete -C pluse pluse; # can be put in bash startup file e.g. .bashrc
- % pluse -m MIME/<tab>
- % pluse -m "MIME::B<tab> ; # use quote (' or ") if you want to use :: as separator
-
 
 =head1 TODO
 
