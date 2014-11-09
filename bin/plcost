@@ -9,6 +9,7 @@ use warnings;
 use Log::Any '$log';
 
 #use App::PlUtils;
+use App::ProgUtils;
 use File::Which;
 use Perinci::CmdLine::Any -prefer_lite=>1;
 
@@ -33,6 +34,7 @@ _
             schema  => 'str*',
             req     => 1,
             pos     => 0,
+            completion => $App::ProgUtils::_complete_program,
         },
         extra_args => {
             summary => 'Extra arguments to pass to script',
