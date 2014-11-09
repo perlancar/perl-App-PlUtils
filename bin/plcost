@@ -6,7 +6,7 @@
 use 5.010;
 use strict;
 use warnings;
-use Log::Any '$log';
+#use Log::Any '$log';
 
 #use App::PlUtils;
 use App::ProgUtils;
@@ -78,7 +78,7 @@ sub plcost {
 
     push @cmd, $file, @{ $args{extra_args} // [] };
 
-    $log->tracef("exec(%s)", \@cmd);
+    #$log->tracef("exec(%s)", \@cmd);
     exec @cmd;
     # [200]; # won't get reached
 }
