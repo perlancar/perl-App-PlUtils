@@ -1,0 +1,98 @@
+#!perl
+
+# DATE
+# VERSION
+
+use 5.010;
+use strict;
+use warnings;
+use Log::Any '$log';
+
+#use App::PlUtils;
+use File::Which;
+use Perinci::CmdLine::Any -prefer_lite=>1;
+
+our %SPEC;
+$SPEC{plcost} = {
+    v => 1.1,
+    summary => 'Run Perl script with Devel::EndStats',
+    description => <<'_',
+
+
+
+_
+    args => {
+        file => {
+            summary => 'Perl script to run',
+            description => <<'_',
+
+For convenience, if filename does not contain path separator, it will first be
+searched in the current directory, then in `PATH` (using `File::Which`).
+
+_
+            schema  => 'str*',
+            req     => 1,
+            pos     => 0,
+        },
+        extra_args => {
+            summary => 'Extra arguments to pass to script',
+            schema  => ['array*', of=>'str*'],
+            pos     => 1,
+            greedy  => 1,
+        },
+        hide_core => {
+            schema => 'bool',
+        },
+        sort => {
+            schema => ['str*', in=>[map {($_,"-$_")}
+                                        qw/file time caller order lines/]],
+        },
+        hide_noncore => {
+            schema => 'bool',
+        },
+        show_memsize => {
+            schema => 'bool',
+        },
+    },
+};
+sub plcost {
+    my %args = @_;
+
+    my $de_import = "verbose,1";
+    $de_import .= ",hide_core,1" if $args{hide_core};
+    $de_import .= ",hide_noncore,1" if $args{hide_noncore};
+    $de_import .= ",show_memsize,1,sort,-memsize" if $args{show_memsize};
+    $de_import .= ",sort,$args{sort}" if $args{sort};
+    my @cmd = ($^X, "-MDevel::EndStats=$de_import");
+
+    my $file = $args{file};
+    if (!(-f $file) && $file !~ m!/!) {
+        # search file in PATH
+        $file = which($file);
+    }
+    unless (-f $file) {
+        return [404, "No such file '$args{file}'"];
+    }
+
+    push @cmd, $file, @{ $args{extra_args} // [] };
+
+    $log->tracef("exec(%s)", \@cmd);
+    exec @cmd;
+    # [200]; # won't get reached
+}
+
+Perinci::CmdLine::Any->new(
+    url => '/main/plcost',
+)->run;
+
+# ABSTRACT: Run Perl script with Devel::EndStats
+# PODNAME: plcost
+
+=head1 SYNOPSIS
+
+ % plcost parse-id-phone
+
+=head1 SEE ALSO
+
+L<pmcost> (from L<App::PMUtils> distribution)
+
