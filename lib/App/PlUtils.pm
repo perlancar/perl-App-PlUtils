@@ -12,20 +12,8 @@ use warnings;
 
 =head1 SYNOPSIS
 
-This distribution provides the following command-line utilities:
-
- pllex
- plsub
- pluse
-
-These utilities have tab completion capability. To activate it, put these lines
-to your bash startup file (e.g. C</etc/bash.bashrc>, C<~/.bash_profile>, or
-C<~/.bashrc>):
-
- for p in \
-   pllex plsub pluse; do
-     complete -C $p $p
- done
+This distribution provides several command-line utilities related to Perl
+scripts. The main purpose of these utilities is tab completion.
 
 
 =head1 FAQ
@@ -33,6 +21,7 @@ C<~/.bashrc>):
 
 =head1 SEE ALSO
 
-L<App::PMUtils>, distribution that provides utilities related to Perl modules.
+L<App::PMUtils>, a similarly spirited distribution that provides utilities
+related to Perl modules.
 
 =cut
