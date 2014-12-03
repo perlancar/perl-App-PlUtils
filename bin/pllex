@@ -35,14 +35,14 @@ _
 };
 sub pllex {
     require Compiler::Lexer;
-    require SHARYANTO::Module::Path;
+    require Module::Path::More;
 
     my %args = @_;
     my $path;
     if (defined $args{module}) {
         my $mod = $args{module};
         $mod =~ s/\.pm$//; $mod =~ s!/!::!g; # convenience
-        $path = SHARYANTO::Module::Path::module_path(module=>$mod);
+        $path = Module::Path::More::module_path(module=>$mod);
         die "Can't find module '$mod'" unless $path;
     } elsif (defined $args{file}) {
         $path = $args{file};
