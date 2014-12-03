@@ -1,5 +1,12 @@
 Revision history for App-PlUtils
 
+0.04    2014-12-03 (PERLANCAR)
+
+	- No functional changes.
+
+	- Switch {SHARYANTO::Module::Path,Module::Path::More}.
+
+
 0.03    2014-11-09 (PERLANCAR)
 
         - Add utility: plcost.
