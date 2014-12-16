@@ -87,7 +87,7 @@ Perinci::CmdLine::Any->new(
     url => '/main/plcost',
 )->run;
 
-# ABSTRACT: Run Perl script with Devel::EndStats
+# ABSTRACT:
 # PODNAME:
 
 =head1 SYNOPSIS

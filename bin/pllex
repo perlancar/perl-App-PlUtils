@@ -67,7 +67,7 @@ Perinci::CmdLine::Any->new(
     url => '/main/pllex',
 )->run;
 
-# ABSTRACT: Tokenize Perl script (or module) using Compiler::Lexer
+# ABSTRACT:
 # PODNAME:
 
 =head1 SYNOPSIS
