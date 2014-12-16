@@ -90,7 +90,7 @@ Perinci::CmdLine::Any->new(
 )->run;
 
 # ABSTRACT: List subroutines defined in a Perl script (or module)
-# PODNAME: plsub
+# PODNAME:
 
 =head1 SYNOPSIS
 

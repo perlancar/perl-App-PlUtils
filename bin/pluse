@@ -101,7 +101,7 @@ Perinci::CmdLine::Any->new(
 )->run;
 
 # ABSTRACT: List required modules (via use()/require()) in a Perl script (or module)
-# PODNAME: pluse
+# PODNAME:
 
 =head1 SYNOPSIS
 

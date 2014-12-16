@@ -88,7 +88,7 @@ Perinci::CmdLine::Any->new(
 )->run;
 
 # ABSTRACT: Run Perl script with Devel::EndStats
-# PODNAME: plcost
+# PODNAME:
 
 =head1 SYNOPSIS
 

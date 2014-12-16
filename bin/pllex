@@ -68,7 +68,7 @@ Perinci::CmdLine::Any->new(
 )->run;
 
 # ABSTRACT: Tokenize Perl script (or module) using Compiler::Lexer
-# PODNAME: pllex
+# PODNAME:
 
 =head1 SYNOPSIS
 
