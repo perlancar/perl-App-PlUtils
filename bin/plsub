@@ -7,7 +7,6 @@ use 5.010;
 use strict;
 use warnings;
 
-use App::PMUtils;
 use Perinci::CmdLine::Any -prefer_lite=>1;
 
 our %SPEC;
@@ -22,7 +21,11 @@ _
     args => {
         module => {
             schema => 'str*',
-            completion => $App::PMUtils::_complete_module,
+            completion => sub {
+                require Complete::Module;
+                my %args = @_;
+                Complete::Module::complete_module(word=>$args{word});
+            },
             cmdline_aliases => {m=>{}},
         },
         file => {
@@ -89,7 +92,7 @@ Perinci::CmdLine::Any->new(
     url => '/main/plsub',
 )->run;
 
-# ABSTRACT: 
+# ABSTRACT:
 # PODNAME:
 
 =head1 SYNOPSIS
