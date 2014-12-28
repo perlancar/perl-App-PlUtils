@@ -1,5 +1,11 @@
 Revision history for App-PlUtils
 
+0.05    2014-12-28 (PERLANCAR)
+
+	- Depend on Complete::Module (and Complete::Util) directly instead
+	  of App::PMUtils (and App::PlUtils).
+
+
 0.04    2014-12-03 (PERLANCAR)
 
 	- No functional changes.
