@@ -1,5 +1,12 @@
 Revision history for App-PlUtils
 
+0.06    2015-01-03 (PERLANCAR)
+
+	- No functional changes.
+
+	- Rebuild (Generate TODO.md).
+
+
 0.05    2014-12-28 (PERLANCAR)
 
 	- Depend on Complete::Module (and Complete::Util) directly instead
