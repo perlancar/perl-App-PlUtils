@@ -7,6 +7,7 @@ use 5.010;
 use strict;
 use warnings;
 
+use App::PlUtils;
 use Perinci::CmdLine::Any -prefer_lite=>1;
 
 our %SPEC;
@@ -19,15 +20,7 @@ $SPEC{plsub} = {
 
 _
     args => {
-        module => {
-            schema => 'str*',
-            completion => sub {
-                require Complete::Module;
-                my %args = @_;
-                Complete::Module::complete_module(word=>$args{word});
-            },
-            cmdline_aliases => {m=>{}},
-        },
+        module => $App::PlUtils::arg_module_single,
         file => {
             summary => 'Specify file instead of module',
             schema  => 'str*',
@@ -120,4 +113,3 @@ Sample output:
  | 75   | column_count |
  | 96   | as_aoa       |
  +------+--------------+
-
