@@ -1,0 +1,74 @@
+#!perl
+
+# DATE
+# VERSION
+
+use 5.010;
+use strict;
+use warnings;
+#use Log::Any '$log';
+
+use App::PlUtils;
+use File::Which;
+use Perinci::CmdLine::Any -prefer_lite=>1;
+
+our %SPEC;
+$SPEC{pllines} = {
+    v => 1.1,
+    summary => 'Count line numbers of Perl programs',
+    description => <<'_',
+
+
+
+_
+    args => {
+        file => $App::PlUtils::arg_file_multiple,
+    },
+    result_naked => 1,
+};
+sub pllines {
+    require SourceCode::LineCounter::Perl;
+
+    my %args = @_;
+
+    my $files = $args{file};
+
+    my $res = [];
+    for my $file (@$files) {
+        my $path = $file;
+        if (!(-f $path) && $file !~ m!/!) {
+            # search file in PATH
+            $path = which($file);
+        }
+        next unless -f $path;
+
+        my $rec = {file=>$file};
+        push @$res, $rec;
+
+        my $counter = SourceCode::LineCounter::Perl->new;
+        $counter->count($path);
+        $rec->{total}   = $counter->total;
+        $rec->{code}    = $counter->code;
+        $rec->{pod}     = $counter->documentation;
+        $rec->{blank}   = $counter->blank;
+        $rec->{comment} = $counter->comment;
+    };
+
+    $res;
+}
+
+Perinci::CmdLine::Any->new(
+    url => '/main/pllines',
+)->run;
+
+# ABSTRACT:
+# PODNAME:
+
+=head1 SYNOPSIS
+
+ % pllines dzil /home/ujang/bin/myscript
+
+
+=head1 SEE ALSO
+
+L<pmlines> (from L<App::PMUtils> distribution)
