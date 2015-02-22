@@ -69,6 +69,16 @@ Perinci::CmdLine::Any->new(
  % pllines dzil /home/ujang/bin/myscript
 
 
+=head1 DESCRIPTION
+
+This utility uses L<SourceCode::LineCounter::Perl> to count lines of
+{code,POD,blank,comment} in a specified Perl script.
+
+
 =head1 SEE ALSO
+
+L<App::cloc> which uses the B<cloc> program and can output number of
+{code,blank,comment} lines in a Perl source code (as well as other languages).
+Results might differ slightly with result from this utility.
 
 L<pmlines> (from L<App::PMUtils> distribution)
