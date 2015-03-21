@@ -59,16 +59,21 @@ our $arg_module_single = {
 
 =head1 SYNOPSIS
 
-This distribution provides several command-line utilities related to Perl
-scripts. The main purpose of these utilities is tab completion.
+This distribution provides tha following command-line utilities related to Perl
+scripts.
+
+#INSERT_EXECS_LIST
+
+The main feature of these utilities is tab completion.
 
 
 =head1 FAQ
 
+#INSERT_BLOCK: App::PMUtils faq
+
 
 =head1 SEE ALSO
 
-L<App::PMUtils>, a similarly spirited distribution that provides utilities
-related to Perl modules.
+#INSERT_BLOCK: App::PMUtils see_also
 
 =cut
