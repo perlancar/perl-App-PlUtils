@@ -1,5 +1,11 @@
 Revision history for App-PlUtils
 
+0.10    2015-09-17 (PERLANCAR)
+
+	- Adjust to Complete::Util 0.36 (complete_program() split to
+	  Complete-Program).
+
+
 0.09    2015-09-03 (PERLANCAR)
 
 	- No functional changes.
