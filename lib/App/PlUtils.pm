@@ -19,9 +19,9 @@ _
     req     => 1,
     pos     => 0,
     completion => sub {
-        require Complete::Util;
+        require Complete::Program;
         my %args = @_;
-        Complete::Util::complete_program(word=>$args{word});
+        Complete::Program::complete_program(word=>$args{word});
     },
 };
 
@@ -38,9 +38,9 @@ _
     pos     => 0,
     greedy  => 1,
     element_completion => sub {
-        require Complete::Util;
+        require Complete::Program;
         my %args = @_;
-        Complete::Util::complete_program(word=>$args{word});
+        Complete::Program::complete_program(word=>$args{word});
     },
 };
 
