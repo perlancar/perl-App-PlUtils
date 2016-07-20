@@ -1,5 +1,11 @@
 Revision history for App-PlUtils
 
+0.11    2016-07-20 (PERLANCAR)
+
+        - Use more specific schemas for the arguments (filename & perl::modname
+          instead of str) to reduce duplication.
+
+
 0.10    2015-09-17 (PERLANCAR)
 
 	- Adjust to Complete::Util 0.36 (complete_program() split to
