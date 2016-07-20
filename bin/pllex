@@ -23,7 +23,7 @@ _
         module => $App::PlUtils::arg_module_single,
         file => {
             summary => 'Specify file instead of module',
-            schema  => 'str*',
+            schema  => 'filename*',
             pos     => 0,
         },
     },

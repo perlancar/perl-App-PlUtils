@@ -15,7 +15,7 @@ For convenience, if filename does not contain path separator, it will first be
 searched in the current directory, then in `PATH` (using `File::Which`).
 
 _
-    schema  => 'str*',
+    schema  => 'filename*',
     req     => 1,
     pos     => 0,
     completion => sub {
@@ -33,7 +33,7 @@ For convenience, if filename does not contain path separator, it will first be
 searched in the current directory, then in `PATH` (using `File::Which`).
 
 _
-    schema  => ['array*', of=>'str*', min_len=>1],
+    schema  => ['array*', of=>'filename*', min_len=>1],
     req     => 1,
     pos     => 0,
     greedy  => 1,
@@ -45,7 +45,7 @@ _
 };
 
 our $arg_module_single = {
-    schema => 'str*',
+    schema => 'perl::modname*',
     completion => sub {
         require Complete::Module;
         my %args = @_;
