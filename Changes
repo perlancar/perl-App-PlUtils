@@ -1,5 +1,3 @@
-Revision history for App-PlUtils
-
 0.11    2016-07-20 (PERLANCAR)
 
         - Use more specific schemas for the arguments (filename & perl::modname
