@@ -1,0 +1,83 @@
+#!perl
+
+# DATE
+# VERSION
+
+use 5.010;
+use strict;
+use warnings;
+
+use App::PlUtils;
+use File::Which;
+use Perinci::CmdLine::Any;
+
+our %SPEC;
+$SPEC{plhtml} = {
+    v => 1.1,
+    summary => 'Render POD as HTML then show in browser',
+    description => <<'_',
+
+This function renders a POD document using <prog:pod2html>, then open a browser
+to show the resulting HTML document.
+
+_
+    args => {
+        file => $App::PlUtils::arg_file_single,
+    },
+    deps => {
+        prog => 'pod2html',
+    },
+};
+sub plhtml {
+    require Browser::Open;
+    require File::Temp;
+    require File::Util::Tempdir;
+
+    my %args = @_;
+
+    my $file = $args{file};
+    if (!(-f $file) && $file !~ m!/!) {
+        # search file in PATH
+        $file = which($file);
+    }
+    unless (-f $file) {
+        return [404, "No such file '$args{file}'"];
+    }
+
+    my $tmpdir = File::Util::Tempdir::get_tempdir();
+    my $cachedir = File::Temp::tempdir(CLEANUP => 1);
+    my $name = $file; $name =~ s!.+/!!;
+    my ($infh, $infile) = File::Temp::tempfile(
+        "$name.XXXXXXXX", DIR=>$tmpdir, SUFFIX=>".pod");
+    my $outfile = "$infile.html";
+    system(
+        "pod2html",
+        "--infile", $file,
+        "--outfile", $outfile,
+        "--cachedir", $cachedir,
+    );
+    return [500, "Can't pod2html: $!"] if $?;
+    my $err = Browser::Open::open_browser("file:$outfile");
+    return [500, "Can't open browser"] if $err;
+    [200];
+}
+
+Perinci::CmdLine::Any->new(
+    url => '/main/plhtml',
+)->run;
+
+# ABSTRACT:
+# PODNAME:
+
+=head1 SYNOPSIS
+
+Basic usage:
+
+ % plhtml <perl-script>
+
+
+=head1 SEE ALSO
+
+L<pldoc>
+
+L<lcpan> (C<doc> subcommand with <--html> option)

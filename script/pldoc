@@ -1,0 +1,65 @@
+#!perl
+
+# DATE
+# VERSION
+
+use 5.010;
+use strict;
+use warnings;
+
+use App::PlUtils;
+use File::Which;
+use Perinci::CmdLine::Any;
+
+our %SPEC;
+$SPEC{pldoc} = {
+    v => 1.1,
+    summary => 'Show documentation of Perl module',
+    description => <<'_',
+
+This function executes <prog:perldoc>. Basically what it offers is command-line
+completion.
+
+_
+    args => {
+        file => $App::PlUtils::arg_file_single,
+    },
+    deps => {
+        prog => 'perldoc',
+    },
+};
+sub pldoc {
+    my %args = @_;
+
+    my $file = $args{file};
+    if (!(-f $file) && $file !~ m!/!) {
+        # search file in PATH
+        $file = which($file);
+    }
+    unless (-f $file) {
+        return [404, "No such file '$args{file}'"];
+    }
+    my @cmd = ("perldoc", $file);
+    exec @cmd;
+    # [200]; # unreachable
+}
+
+Perinci::CmdLine::Any->new(
+    url => '/main/pldoc',
+)->run;
+
+# ABSTRACT:
+# PODNAME:
+
+=head1 SYNOPSIS
+
+Basic usage:
+
+ % pldoc <perl-script>
+
+
+=head1 SEE ALSO
+
+L<plhtml>
+
+L<lcpan> (C<doc> subcommand)
