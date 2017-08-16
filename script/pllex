@@ -51,7 +51,9 @@ sub pllex {
     my $ct = do {
         undef $/;
         open my $fh, "<", $path or die "Can't open '$path': $!\n";
-        <$fh>;
+        my $res = <$fh>;
+        close $fh;
+        $res;
     };
     my $tokens = $lexer->tokenize($ct);
     my @res;

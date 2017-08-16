@@ -14,7 +14,7 @@ use Perinci::CmdLine::Any;
 our %SPEC;
 $SPEC{pldoc} = {
     v => 1.1,
-    summary => 'Show documentation of Perl module',
+    summary => 'Show documentation of Perl script',
     description => <<'_',
 
 This function executes <prog:perldoc>. Basically what it offers is command-line
