@@ -64,6 +64,8 @@ sub plhtml {
 
 Perinci::CmdLine::Any->new(
     url => '/main/plhtml',
+    read_config => 0,
+    read_env => 0,
 )->run;
 
 # ABSTRACT:

@@ -96,6 +96,8 @@ sub pluse {
 
 Perinci::CmdLine::Any->new(
     url => '/main/pluse',
+    read_config => 0,
+    read_env => 0,
 )->run;
 
 # ABSTRACT:

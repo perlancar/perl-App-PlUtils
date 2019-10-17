@@ -46,6 +46,8 @@ sub pldoc {
 
 Perinci::CmdLine::Any->new(
     url => '/main/pldoc',
+    read_config => 0,
+    read_env => 0,
 )->run;
 
 # ABSTRACT:

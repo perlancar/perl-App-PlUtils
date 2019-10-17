@@ -72,6 +72,8 @@ sub plcost {
 
 Perinci::CmdLine::Any->new(
     url => '/main/plcost',
+    read_config => 0,
+    read_env => 0,
 )->run;
 
 # ABSTRACT:
